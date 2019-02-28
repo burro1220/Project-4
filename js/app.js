@@ -1,5 +1,8 @@
 /* Treehouse FSJS Techdegree
  * Project 4 - OOP Game App
  * app.js */
-const game = new Game();
-game.getRandomPhrase().addPhraseToDisplay();
+let game = '';
+document.querySelector('#btn__reset').addEventListener('click' , function() {
+    game = new Game();
+    game.startGame();
+})

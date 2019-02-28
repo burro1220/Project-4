@@ -9,21 +9,21 @@ class Phrase {
     /**
     * Display phrase on game board
     */
-    addPhraseToDisplay() {
+    addPhraseToDisplay(phrase) {
         const ul = document.querySelector('ul');
-        let phrase = game.getRandomPhrase();
-        phrase = phrase.phrase;
+        phrase = this.phrase;
+        let elem = '';
         for (let i=0; i < phrase.length; i++) {
-            let elem = '';
-                        
+                                    
             if (phrase[i] == ' ') {
                 elem += "<li class='space'> </li>";
             } else {
-                elem += "<li class='hide letter " + phrase[i] + ">" + phrase[i] + "</li>"
+                elem += `<li class='hide letter ${phrase[i]}' ${phrase[i]} </li>`
             }
-            //console.log(typeof elem)
-            document.querySelector('#phrase ul').innerHTML = elem;
+               
          }
+
+         document.querySelector('#phrase ul').innerHTML = elem;
 
     }
 }
