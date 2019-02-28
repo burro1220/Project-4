@@ -33,5 +33,52 @@ class Game {
         
 
     }
+    /**
+    * Checks for winning move
+    * @return {boolean} True if game has been won, false if game wasn't
+    won
+    */
+    checkForWin() {
+        const hiddenLetters = document.querySelectorAll('.hide')   ;
+        if (hiddenLetters.length === 0) {
+            return true;
+        } else return false;
+    }
+    /**
+    * Increases the value of the missed property
+    * Removes a life from the scoreboard
+    * Checks if player has remaining lives and ends game if player is out
+    */
+    removeLife() {
+        this.missed += 1;
+        if (this.missed === 5) {
+            this.gameOver();
+        } else {
+            const heartImg = document.querySelector("img[src='images/liveHeart.png']");
+            heartImg.src="images/lostHeart.png";
+        }
+    }
+    /**
+    * Displays game over message
+    * @param {boolean} gameWon - Whether or not the user won the game
+    */
+    gameOver(gameWon) {
+        document.querySelector('#overlay').style.display = '';
+        if (gameWon) {
+            document.querySelector('#game-over-message').innerHTML = 'Congratulations! You Won!';
+        } else document.querySelector('#game-over-message').innerHTML = 'Sorry, You Lost. Please Try Again.';
+    }
+    /**
+    * Handles onscreen keyboard button clicks
+    * @param (HTMLButtonElement) button - The clicked button element
+    */
+    handleInteraction(button) {
+        button.setAttribute('disabled' , 'true');
+        const letter = button.innerHTML;
+        console.log(this.phrase.checkLetter(letter))
+
+        
+    }
+
 
 }
