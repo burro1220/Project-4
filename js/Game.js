@@ -128,18 +128,20 @@ class Game {
      */
     gameReset(){
         //remove <li></li> elements from <ul>
-        document.querySelectorAll('li').forEach(link => link.remove());
+        document.querySelectorAll('#phrase li').forEach(link => link.remove());
         //reset each key by enabling and adding/removing appropriate classes
         document.querySelectorAll('.key').forEach(key => {
-            key.setAttribute('disabled', 'false');
+            key.removeAttribute('disabled');
             key.classList.remove('chosen', 'wrong');
             key.classList.add('key')
         });
+        //reset scoreboard images
+        document.querySelectorAll('.tries img').forEach(image => image.src="images/liveHeart.png");
         //reset misses to 0
         this.missed = 0;
         //reset scoreboard images
-        let images = document.querySelectorAll('.tries img');
-        console.log(images);
+        
+        
     }
 
 
