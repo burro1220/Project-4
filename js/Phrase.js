@@ -3,29 +3,29 @@
  * Phrase.js */
 class Phrase {
     constructor(phrase) {
+        //lowercase version of phrase set to Phrase object
         this.phrase = phrase.toLowerCase();
     }
 
     /**
     * Display phrase on game board
     */
-    addPhraseToDisplay(phrase) {
-        
-        phrase = phrase.phrase;
-        
+    addPhraseToDisplay() {
+        //grab <ul> element
         const ul = document.querySelector('ul');
+        //set variable to store string
         let elem = '';
-        for (let i=0; i < phrase.length; i++) {
+        for (let i=0; i < this.phrase.length; i++) {
                        
-            if (phrase[i] == ' ') {
+            if (this.phrase[i] == ' ') {
                 elem += "<li class='space'> </li>";
             } else {
-                elem += `<li class='hide letter ${phrase[i]}'>${phrase[i]}</li>`
+                elem += `<li class='hide letter ${this.phrase[i]}'>${this.phrase[i]}</li>`
             }
                
          }
 
-         document.querySelector('#phrase ul').innerHTML = elem;
+         ul.innerHTML = elem;
 
     }
     /**
@@ -33,21 +33,23 @@ class Phrase {
     * @param (string) letter - Letter to check
     */
     checkLetter(letter){
-        const phrase = game.activePhrase;
-        
-        if (this.phrase.indexOf(letter) == -1) {
-            return false;
-        } else return true;
+        //return matching letter
+        return this.phrase.includes(letter);
     }
     /**
     * Displays passed letter on screen after a match is found
     * @param (string) letter - Letter to display
     */    
     showMatchedLetter(letter){
+        //set string for reference
         const string = `.hide.letter.${letter}`;
+        //use string to match elements
         const matchingLetters = document.querySelectorAll(string);
+        //for each matching element
         for (let each of matchingLetters){
+            //remove the hide class
             each.classList.remove('hide');
+            //add the show class
             each.classList.add('show');
         }
 

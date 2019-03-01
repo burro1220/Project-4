@@ -3,35 +3,48 @@
  * Game.js */
 class Game {
     constructor() {
+        //track misses
         this.missed = 0;
-        this.phrases = [
+        // create array of phrases objects and set activewPhrase to null
+        this.phrases = this.createPhrases();
+        this.activePhrase = null;
+    }
+    /**
+    * Creates phrases array from phrases property
+    * @return {array} phrases array
+    */
+    createPhrases() {
+        let phrasesArray = [
             new Phrase('The best things in life are free'),
             new Phrase('Life is like a box of chocolates'),
             new Phrase('The grass is always greener on the other side'),
             new Phrase('An apple a day keeps the doctor away'),
             new Phrase('Children should be seen and not heard'),
         ];
-        this.activePhrase = null;
+        return phrasesArray;
     }
     /**
     * Selects random phrase from phrases property
     * @return {Object} Phrase object chosen to be used
     */
     getRandomPhrase() {
-        const phrases = this.phrases;
-        const randomIndex = Math.floor(Math.random() * phrases.length);
-        return phrases[randomIndex];
+        const randomIndex = Math.floor(Math.random() * this.phrases.length);
+        return this.phrases[randomIndex];
     }
     /**
     * Begins game by selecting a random phrase and displaying it to user
     */
     startGame() {
+        //start game by resetting everything
+        this.gameReset();
+        //hide start screen
         document.querySelector('#overlay').style.display = 'none';
+        //get a random phrase
         let phrase = this.getRandomPhrase();
+        //add the phrase to display
         phrase.addPhraseToDisplay(phrase);
+        //make phrase activePhrase
         this.activePhrase = phrase;
-        
-
     }
     /**
     * Checks for winning move
@@ -39,7 +52,8 @@ class Game {
     won
     */
     checkForWin() {
-        const hiddenLetters = document.querySelectorAll('.hide')   ;
+        const hiddenLetters = document.querySelectorAll('.hide');
+        //if hidden letters return false
         if (hiddenLetters.length === 0) {
             return true;
         } else return false;
@@ -50,10 +64,14 @@ class Game {
     * Checks if player has remaining lives and ends game if player is out
     */
     removeLife() {
+        //increase misses after each miss
         this.missed += 1;
+        //check # of misses and call gameOver if === 5
         if (this.missed === 5) {
-            this.gameOver();
+            // pass  loss to gameOver()
+            this.gameOver(false);
         } else {
+            //scoreboard of images reduces by one with each loss
             const heartImg = document.querySelector("img[src='images/liveHeart.png']");
             heartImg.src="images/lostHeart.png";
         }
@@ -63,9 +81,12 @@ class Game {
     * @param {boolean} gameWon - Whether or not the user won the game
     */
     gameOver(gameWon) {
+        //set overlay display back to block
         document.querySelector('#overlay').style.display = '';
+        //if game is won
         if (gameWon) {
             document.querySelector('#game-over-message').innerHTML = 'Congratulations! You Won!';
+          // if game is lost  
         } else document.querySelector('#game-over-message').innerHTML = 'Sorry, You Lost. Please Try Again.';
     }
     /**
@@ -73,11 +94,52 @@ class Game {
     * @param (HTMLButtonElement) button - The clicked button element
     */
     handleInteraction(button) {
-        button.setAttribute('disabled' , 'true');
+        //disable button
+        button.disabled = true;
+        //extracts text from button
         const letter = button.innerHTML;
-        console.log(this.phrase.checkLetter(letter))
+        //if phrase doesn't match letter
+        if (this.activePhrase.checkLetter(letter) === false){
+            //add wrong class to button
+            button.classList.add('wrong');
+            //remove a life
+            this.removeLife();
+        }
+        else {
+            //set class to chosen
+            button.classList.add('chosen');
+            //show the matched letter(s)
+            this.activePhrase.showMatchedLetter(letter);
+            //check for win
+            if (this.checkForWin() === true) {
+                //if win call gameOver() and pass true
+                this.gameOver(true);
+            }
+                
+            
+        }
 
         
+    }
+    /**
+     *Performs Reset functionality and called at start of each game
+     *
+     * @memberof Game
+     */
+    gameReset(){
+        //remove <li></li> elements from <ul>
+        document.querySelectorAll('li').forEach(link => link.remove());
+        //reset each key by enabling and adding/removing appropriate classes
+        document.querySelectorAll('.key').forEach(key => {
+            key.setAttribute('disabled', 'false');
+            key.classList.remove('chosen', 'wrong');
+            key.classList.add('key')
+        });
+        //reset misses to 0
+        this.missed = 0;
+        //reset scoreboard images
+        let images = document.querySelectorAll('.tries img');
+        console.log(images);
     }
 
 
