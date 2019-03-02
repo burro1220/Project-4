@@ -56,7 +56,10 @@ class Game {
         //if hidden letters return false
         if (hiddenLetters.length === 0) {
             return true;
-        } else return false;
+        } else {
+            
+            return false;
+        }
     }
     /**
     * Increases the value of the missed property
@@ -71,6 +74,9 @@ class Game {
             // pass  loss to gameOver()
             this.gameOver(false);
         } else {
+            //call wrongAnswer
+            this.wrongAnswer();
+            setTimeout(game.answerReset, 750);
             //scoreboard of images reduces by one with each loss
             const heartImg = document.querySelector("img[src='images/liveHeart.png']");
             heartImg.src="images/lostHeart.png";
@@ -83,11 +89,18 @@ class Game {
     gameOver(gameWon) {
         //set overlay display back to block
         document.querySelector('#overlay').style.display = '';
+        //show reset button
+        document.querySelector('button').style.display = '';
         //if game is won
         if (gameWon) {
+            document.querySelector('#overlay').setAttribute('class', 'win');
             document.querySelector('#game-over-message').innerHTML = 'Congratulations! You Won!';
-          // if game is lost  
-        } else document.querySelector('#game-over-message').innerHTML = 'Sorry, You Lost. Please Try Again.';
+            // if game is lost  
+            }    
+            else {
+                document.querySelector('#overlay').setAttribute('class', 'lose');
+                document.querySelector('#game-over-message').innerHTML = 'Sorry, You Lost. Please Try Again.';
+            }
     }
     /**
     * Handles onscreen keyboard button clicks
@@ -100,25 +113,24 @@ class Game {
         const letter = button.innerHTML;
         //if phrase doesn't match letter
         if (this.activePhrase.checkLetter(letter) === false){
-            //add wrong class to button
-            button.classList.add('wrong');
             //remove a life
             this.removeLife();
-        }
-        else {
-            //set class to chosen
-            button.classList.add('chosen');
-            //show the matched letter(s)
-            this.activePhrase.showMatchedLetter(letter);
-            //check for win
-            if (this.checkForWin() === true) {
-                //if win call gameOver() and pass true
-                this.gameOver(true);
-            }
-                
+            //add wrong class to button
+            button.classList.add('wrong');
             
+        } else if (this.activePhrase.checkLetter(letter) === true){
+            this.activePhrase.showMatchedLetter(letter);
+            let $won = this.checkForWin();
+            if ($won === true) {
+              this.gameOver(true);
+            } else {
+                this.rightAnswer();
+                setTimeout(game.answerReset , 750);
+                //set class to chosen
+                button.classList.add('chosen');
+            }        
+        
         }
-
         
     }
     /**
@@ -142,6 +154,33 @@ class Game {
         //reset scoreboard images
         
         
+    }
+    /*
+    * code to execute if guess is wrong
+    *
+    * */
+    wrongAnswer(){
+        document.querySelector('#game-over-message').innerHTML = 'Nope! Sorry!';
+        document.querySelector('#overlay').style.backgroundColor = 'red';
+        document.querySelector('button').style.display = 'none';
+        document.querySelector('#overlay').style.display = 'flex';
+    }
+    /*
+    * code to execute if guess is wrong
+    *
+    * */
+    rightAnswer(){
+        document.querySelector('#game-over-message').innerHTML = 'Boo-Yah!';
+        document.querySelector('#overlay').style.backgroundColor = 'blue';
+        document.querySelector('button').style.display = 'none';
+        document.querySelector('#overlay').style.display = 'flex';
+    }
+    /*
+    * code to hide overlay after wrongAnswer() or rightAnswer()
+    *
+    * */
+    answerReset() {
+        document.querySelector('#overlay').style.display = 'none';
     }
 
 
