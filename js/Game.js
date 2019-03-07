@@ -184,4 +184,8 @@ class Game {
     }
 
 
-}
+};
+document.addEventListener('keydown', function (e) {
+    const button = e.key;
+    game.handleInteraction(button);
+})
