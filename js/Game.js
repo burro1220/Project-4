@@ -107,6 +107,7 @@ class Game {
     * @param (HTMLButtonElement) button - The clicked button element
     */
     handleInteraction(button) {
+        console.log(button);
         //disable button
         button.disabled = true;
         //extracts text from button
@@ -161,7 +162,7 @@ class Game {
     * */
     wrongAnswer(){
         document.querySelector('#game-over-message').innerHTML = 'Nope! Sorry!';
-        document.querySelector('#overlay').style.backgroundColor = 'red';
+        document.querySelector('#overlay').style.backgroundColor = 'orange';
         document.querySelector('button').style.display = 'none';
         document.querySelector('#overlay').style.display = 'flex';
     }
@@ -186,6 +187,7 @@ class Game {
 
 };
 document.addEventListener('keydown', function (e) {
-    const button = e.key;
+    const button = document.createElement('button');
+    button.innerHTML = e.key;
     game.handleInteraction(button);
 })
