@@ -187,7 +187,15 @@ class Game {
 
 };
 document.addEventListener('keydown', function (e) {
-    const button = document.createElement('button');
-    button.innerHTML = e.key;
-    game.handleInteraction(button);
+    const keys = document.querySelectorAll('.key');
+    for (key of keys) {
+        if (key.innerHTML === e.key) {
+            game.handleInteraction(key);
+            e.preventDefault;
+            break;
+        }
+    }
+    //console.log(keys);
+    
+    //game.handleInteraction(e.target);
 })
