@@ -107,7 +107,6 @@ class Game {
     * @param (HTMLButtonElement) button - The clicked button element
     */
     handleInteraction(button) {
-        console.log(button);
         //disable button
         button.disabled = true;
         //extracts text from button
@@ -162,7 +161,7 @@ class Game {
     * */
     wrongAnswer(){
         document.querySelector('#game-over-message').innerHTML = 'Nope! Sorry!';
-        document.querySelector('#overlay').style.backgroundColor = 'orange';
+        document.querySelector('#overlay').style.backgroundColor = '#FBE864';
         document.querySelector('button').style.display = 'none';
         document.querySelector('#overlay').style.display = 'flex';
     }
@@ -172,7 +171,7 @@ class Game {
     * */
     rightAnswer(){
         document.querySelector('#game-over-message').innerHTML = 'Boo-Yah!';
-        document.querySelector('#overlay').style.backgroundColor = 'blue';
+        document.querySelector('#overlay').style.backgroundColor = '#9F8BE5';
         document.querySelector('button').style.display = 'none';
         document.querySelector('#overlay').style.display = 'flex';
     }
@@ -183,22 +182,23 @@ class Game {
     answerReset() {
         document.querySelector('#overlay').style.display = 'none';
     }
+    handleKeyboard (){
+        document.addEventListener('keydown', function (e) {
+        const keys = document.querySelectorAll('.key');
+        for (let key of keys) {
+            if (key.innerHTML == e.key) {
+                if(!key.classList.contains('chosen') && !key.classList.contains('wrong')) {
+                game.handleInteraction(key);
+                }
 
-
-};
-document.addEventListener('keydown', function (e) {
-    const keys = document.querySelectorAll('.key');
-    for (key of keys) {
-        if (key.innerHTML == e.key) {
-            if(!key.classList.contains('chosen') && !key.classList.contains('wrong')) {
-            console.log(key);
             }
-            
-            
-            
         }
     }
-    //console.log(keys);
-    
-    game.handleInteraction(e.target);
-})
+
+    )};
+   
+};
+
+            
+            
+            
