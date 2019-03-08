@@ -189,13 +189,16 @@ class Game {
 document.addEventListener('keydown', function (e) {
     const keys = document.querySelectorAll('.key');
     for (key of keys) {
-        if (key.innerHTML === e.key) {
-            game.handleInteraction(key);
-            e.preventDefault;
-            break;
+        if (key.innerHTML == e.key) {
+            if(!key.classList.contains('chosen') && !key.classList.contains('wrong')) {
+            console.log(key);
+            }
+            
+            
+            
         }
     }
     //console.log(keys);
     
-    //game.handleInteraction(e.target);
+    game.handleInteraction(e.target);
 })
