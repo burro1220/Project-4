@@ -160,20 +160,24 @@ class Game {
     *
     * */
     wrongAnswer(){
-        document.querySelector('#game-over-message').innerHTML = 'Nope! Sorry!';
-        document.querySelector('#overlay').style.backgroundColor = '#FBE864';
-        document.querySelector('button').style.display = 'none';
-        document.querySelector('#overlay').style.display = 'flex';
+        if(Math.random() >= .7) {
+            document.querySelector('#game-over-message').innerHTML = 'Nope! Sorry!';
+            document.querySelector('#overlay').style.backgroundColor = '#FBE864';
+            document.querySelector('button').style.display = 'none';
+            document.querySelector('#overlay').style.display = 'flex';
+        }
     }
     /*
     * code to execute if guess is wrong
     *
     * */
     rightAnswer(){
+       if(Math.random() >= .7) {
         document.querySelector('#game-over-message').innerHTML = 'Boo-Yah!';
         document.querySelector('#overlay').style.backgroundColor = '#9F8BE5';
         document.querySelector('button').style.display = 'none';
         document.querySelector('#overlay').style.display = 'flex';
+       }
     }
     /*
     * code to hide overlay after wrongAnswer() or rightAnswer()

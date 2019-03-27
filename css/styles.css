@@ -40,6 +40,7 @@ h2 {
   text-transform: uppercase;
   font-size: var(--font-size-large);
   margin: 0;
+  text-shadow: 2px 2px 2px blueviolet;
 }
 
 h1 {
@@ -58,6 +59,7 @@ button {
   -o-transition: var(--transition);
   transition: var(--transition);
   cursor: pointer;
+  box-shadow: 1px 1px 1px grey;
 }
 
 #btn__reset {
@@ -72,6 +74,8 @@ button {
   height: 100%;
   max-height: 900px;
   text-align: center;
+  background-image: url(white-waves.png);
+  background-repeat: repeat;
 }
 
 .section {
@@ -81,6 +85,7 @@ button {
 
 #phrase ul li{
   margin-top: 15px;
+  box-shadow: 2px 2px 2px blueviolet;
 }
 
 /* Title */
@@ -177,10 +182,18 @@ button {
 
 .title {
   color: #FFF;
+  
 }
 
 .start {
+  background-image: url(../images/bg.jpg);
+  background-repeat: no-repeat;
   background-color: #3a3f58;
+  opacity: .9;
+}
+
+.start h2.title {
+  background-color: #193019;
 }
 
 .start a {
